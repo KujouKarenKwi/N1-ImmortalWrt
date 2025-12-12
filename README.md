@@ -3,7 +3,7 @@
 包含：<br>
 [luci-app-amlogic](https://github.com/ophub/luci-app-amlogic)<br>
 luci-app-dockerman<br>
-[luci-app-passwall](https://github.com/xiaorouji/openwrt-passwall)[已包含geosite及geoip的data文件]<br>
+[luci-app-passwall](https://github.com/xiaorouji/openwrt-passwall)（已包含geosite及geoip的data文件）<br>
 luci-app-samba4<br>
 luci-app-adguardhome
 ***
