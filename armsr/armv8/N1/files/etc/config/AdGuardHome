@@ -1,0 +1,21 @@
+
+config AdGuardHome 'AdGuardHome'
+	option enabled '1'
+	option httpport '3000'
+	option redirect 'none'
+	option configpath '/etc/AdGuardHome/AdGuardHome.yaml'
+	option workdir '/etc/AdGuardHome'
+	option logfile '/tmp/AdGuardHome.log'
+	option verbose '0'
+	option binpath '/usr/bin/AdGuardHome'
+	list upprotect '$binpath'
+	list upprotect '$configpath'
+	option downloadlinks 'https://cdn.jsdelivr.net/gh/AdguardTeam/AdGuardHome@${latest_ver}/AdGuardHome_linux_${Arch}.tar.gz\
+	https://github.com/AdguardTeam/AdGuardHome/releases/download/${latest_ver}/AdGuardHome_linux_${Arch}.tar.gz'
+	option hostsmd5 '5504bb04bd01cb0e340aee9e2ae065b2'
+	option waitonboot '1'
+	option gfwupstream 'tcp://208.67.220.220:5353'
+	list old_redirect 'none'
+	list old_port '0'
+	list old_enabled '0'
+

@@ -67,20 +67,17 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Download custom GeoIP & GeoSite
-      run: |
-        mkdir -p openwrt/files/usr/share/v2ray
-        mkdir -p openwrt/files/usr/share/xray
-        wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
-        wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
-        chmod 644 openwrt/files/usr/share/v2ray/*.dat
-        ln -s /usr/share/v2ray/geoip.dat openwrt/files/usr/share/xray/geoip.dat
-        ln -s /usr/share/v2ray/geosite.dat openwrt/files/usr/share/xray/geosite.dat
-
     - name: Load N1 custom config
       run: |
         rm -rf openwrt/files openwrt/.config
         mv armsr/armv8/N1/files armsr/armv8/N1/.config openwrt/
+
+    - name: Download custom GeoIP & GeoSite
+      run: |
+        mkdir -p openwrt/files/usr/share/v2ray
+        wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+        wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+        chmod 644 openwrt/files/usr/share/v2ray/*.dat
 
     - name: SSH connect to Actions
       uses: P3TERX/ssh2actions@main
@@ -105,11 +102,11 @@ jobs:
       env:
         OPENWRT_ARMVIRT: openwrt/bin/targets/armsr/armv8/*rootfs.tar.gz
         KERNEL_REPO_URL: breakingbadboy/OpenWrt
-        KERNEL_VERSION_NAME: 6.6.y
+        KERNEL_VERSION_NAME: 6.12.y
         PACKAGE_SOC: diy
         GZIP_IMGS: .xz
         SCRIPT_DIY_PATH: armsr/armv8/N1/mk_s905d_n1.sh
-        WHOAMI: nantayo
+        WHOAMI: KujouKarenKwi
         SW_FLOWOFFLOAD: 0
         SFE_FLOW: 0
 
@@ -119,9 +116,9 @@ jobs:
         tag_name: OpenWrt_${{ env.FILE_DATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.xz
         body: |
-          IP: 10.10.10.10
-          账户: root
-          密码: password
+          IP Address: 10.10.10.10
+          Account: root
+          Password: password
 
     - name: Delete old releases
       uses: dev-drprasad/delete-older-releases@master
