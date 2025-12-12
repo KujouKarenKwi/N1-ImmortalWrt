@@ -70,9 +70,12 @@ jobs:
     - name: Download custom GeoIP & GeoSite
       run: |
         mkdir -p openwrt/files/usr/share/v2ray
+        mkdir -p openwrt/files/usr/share/xray
         wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
         wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
         chmod 644 openwrt/files/usr/share/v2ray/*.dat
+        ln -s /usr/share/v2ray/geoip.dat openwrt/files/usr/share/xray/geoip.dat
+        ln -s /usr/share/v2ray/geosite.dat openwrt/files/usr/share/xray/geosite.dat
 
     - name: Load N1 custom config
       run: |
