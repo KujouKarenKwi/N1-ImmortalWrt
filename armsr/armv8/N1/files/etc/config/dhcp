@@ -1,4 +1,3 @@
-
 config dnsmasq
 	option domainneeded '1'
 	option localise_queries '1'
@@ -41,4 +40,3 @@ config odhcpd 'odhcpd'
 	option leasetrigger '/usr/sbin/odhcpd-update'
 	option loglevel '4'
 	option piofolder '/tmp/odhcpd-piofolder'
-

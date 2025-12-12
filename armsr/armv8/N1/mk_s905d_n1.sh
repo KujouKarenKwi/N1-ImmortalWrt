@@ -3,6 +3,26 @@
 echo "========================= begin $0 ==========================="
 source make.env
 source public_funcs
+
+write_banner() {
+    cat > ${TGT_ROOT}/etc/banner << 'EOF'
+  _  __     _             _  __                    _  __        _
+ | |/ /    (_)           | |/ /                   | |/ /       (_)
+ | ' /_   _ _  ___  _   _| ' / __ _ _ __ ___ _ __ | ' /_      ___
+ |  <| | | | |/ _ \| | | |  < / _` | '__/ _ \ '_ \|  <\ \ /\ / / |
+ | . \ |_| | | (_) | |_| | . \ (_| | | |  __/ | | | . \\ V  V /| |
+ |_|\_\__,_| |\___/ \__,_|_|\_\__,_|_|  \___|_| |_|_|\_\\_/\_/ |_|
+          _/ |
+         |__/
+-------------------------------------------------------------------
+EOF
+    echo " Base on ImmortalWrt ${OPENWRT_VER} by ImmortalWrt Team" >> ${TGT_ROOT}/etc/banner
+    echo " Kernel ${KERNEL_VERSION} by unifreq" >> ${TGT_ROOT}/etc/banner
+    echo " Packaged by ${WHOAMI} on $(date "+%Y-%m-%d")" >> ${TGT_ROOT}/etc/banner
+    echo " PLATFORM: ${PLATFORM}  SOC: ${SOC}  BOARD: ${BOARD}" >> ${TGT_ROOT}/etc/banner
+    echo "-------------------------------------------------------------------" >> ${TGT_ROOT}/etc/banner
+}
+
 init_work_env
 
 # 盒子型号识别参数

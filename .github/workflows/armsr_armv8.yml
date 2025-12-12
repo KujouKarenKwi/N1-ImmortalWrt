@@ -75,9 +75,15 @@ jobs:
     - name: Download custom GeoIP & GeoSite
       run: |
         mkdir -p openwrt/files/usr/share/v2ray
+        mkdir -p openwrt/files/usr/bin
         wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
         wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
         chmod 644 openwrt/files/usr/share/v2ray/*.dat
+        wget -O agh.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_arm64.tar.gz
+        tar -zxvf agh.tar.gz
+        mv AdGuardHome/AdGuardHome openwrt/files/usr/bin/AdGuardHome
+        chmod +x openwrt/files/usr/bin/AdGuardHome
+        rm -rf agh.tar.gz AdGuardHome
 
     - name: SSH connect to Actions
       uses: P3TERX/ssh2actions@main

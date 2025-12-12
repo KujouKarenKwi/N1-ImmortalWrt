@@ -12,6 +12,7 @@ config defaults
 config zone
 	option name 'lan'
 	list network 'lan'
+	list network 'lan_rescue'
 	option input 'ACCEPT'
 	option output 'ACCEPT'
 	option forward 'ACCEPT'
@@ -133,4 +134,3 @@ config include 'passwall_server'
 	option type 'script'
 	option path '/var/etc/passwall_server.include'
 	option reload '1'
-
