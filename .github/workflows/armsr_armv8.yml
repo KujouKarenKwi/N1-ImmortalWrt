@@ -44,7 +44,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo -E apt-get -qq update > /dev/null
-        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2410) > /dev/null
+        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/KujouKarenKwi/N1-ImmortalWrt/refs/heads/master/pkg/2410) > /dev/null
         sudo -E apt-get -qq autoremove --purge > /dev/null
         sudo -E apt-get -qq clean > /dev/null
         sudo timedatectl set-timezone "$TZ"
@@ -66,6 +66,13 @@ jobs:
         $GITHUB_WORKSPACE/armsr/armv8/diy/diy.sh
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+
+    - name: Download custom GeoIP & GeoSite
+      run: |
+        mkdir -p openwrt/files/usr/share/v2ray
+        wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+        wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+        chmod 644 openwrt/files/usr/share/v2ray/*.dat
 
     - name: Load N1 custom config
       run: |
@@ -109,8 +116,6 @@ jobs:
         tag_name: OpenWrt_${{ env.FILE_DATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.xz
         body: |
-          首次使用建议全新刷写
-          * 基本信息
           IP: 10.10.10.10
           账户: root
           密码: password
