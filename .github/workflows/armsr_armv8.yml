@@ -119,7 +119,7 @@ jobs:
     - name: Upload firmware to release
       uses: softprops/action-gh-release@master
       with:
-        tag_name: OpenWrt_${{ env.FILE_DATE }}
+        tag_name: ImmortalWrt_${{ env.FILE_DATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.xz
         body: |
           IP Address: 10.10.10.10
