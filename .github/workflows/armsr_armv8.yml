@@ -72,7 +72,7 @@ jobs:
         rm -rf openwrt/files openwrt/.config
         mv armsr/armv8/N1/files armsr/armv8/N1/.config openwrt/
         
-        chmod +x armsr/armv8/N1/files/first_run.sh
+        chmod +x armsr/armv8/N1/first_run.sh
         sed -i 's|FIRSTRUN_SCRIPT="${PWD}/files/first_run.sh"|FIRSTRUN_SCRIPT="${GITHUB_WORKSPACE}/armsr/armv8/N1/first_run.sh"|g' armsr/armv8/N1/mk_s905d_n1.sh
 
     - name: Download custom GeoIP & GeoSite
