@@ -129,9 +129,10 @@ jobs:
         tag_name: ImmortalWrt_${{ env.FILE_DATE }}
         files: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.xz
         body: |
-          IP Address: 10.10.10.10
-          Account: root
-          Password: password
+          默认IP: 10.10.10.10
+          网关: 10.10.10.1
+          备用IP: 192.168.1.100
+          LUCI界面: root@password
 
     - name: Delete old releases
       uses: dev-drprasad/delete-older-releases@master
