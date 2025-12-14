@@ -23,11 +23,11 @@ env:
 jobs:
   build:
     runs-on: ubuntu-24.04
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@main
-
+      
     - name: Free up space
       uses: jlumbroso/free-disk-space@main
       with:
@@ -38,7 +38,7 @@ jobs:
         large-packages: true
         docker-images: true
         swap-storage: true
-
+        
     - name: Initialize environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -50,14 +50,14 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-
+        
     - name: Clone source code
       working-directory: /workdir
       run: |
         git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         echo "FILE_DATE=$(date +"%Y%m%d")" >> $GITHUB_ENV
-
+        
     - name: Update & Install feeds
       run: |
         chmod +x armsr/armv8/diy/diy.sh
@@ -66,7 +66,7 @@ jobs:
         $GITHUB_WORKSPACE/armsr/armv8/diy/diy.sh
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-
+        
     - name: Load N1 custom config
       run: |
         rm -rf openwrt/files openwrt/.config
@@ -74,23 +74,56 @@ jobs:
         
         chmod +x armsr/armv8/N1/first_run.sh
         sed -i 's|FIRSTRUN_SCRIPT="${PWD}/files/first_run.sh"|FIRSTRUN_SCRIPT="${GITHUB_WORKSPACE}/armsr/armv8/N1/first_run.sh"|g' armsr/armv8/N1/mk_s905d_n1.sh
-
-    - name: Download custom GeoIP & GeoSite
+        
+    - name: Download custom binaries & rules
       run: |
         mkdir -p openwrt/files/usr/share/v2ray
+        mkdir -p openwrt/files/usr/bin
+        mkdir -p openwrt/files/etc/AdGuardHome/data/filters
+        
+        echo "Downloading Geodata..."
         wget -O openwrt/files/usr/share/v2ray/geosite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
         wget -O openwrt/files/usr/share/v2ray/geoip.dat https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
         chmod 644 openwrt/files/usr/share/v2ray/*.dat
         
-        mkdir -p openwrt/files/usr/bin
+        echo "Downloading Xray..."
+        wget -O xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
+        unzip -o xray.zip -d xray_tmp
+        mv xray_tmp/xray openwrt/files/usr/bin/xray
+        rm -rf xray.zip xray_tmp
+        
+        echo "Auto-detecting latest Sing-box..."
+        SING_TAG=$(curl -sL "https://api.github.com/repos/SagerNet/sing-box/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        SING_NAME=$(curl -sL "https://api.github.com/repos/SagerNet/sing-box/releases/latest" | grep '"name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        SING_VER=${SING_TAG#v}
+        echo "Latest Sing-box version: $SING_VER"
+        wget -O singbox.tar.gz "https://github.com/SagerNet/sing-box/releases/download/${SING_TAG}/sing-box-${SING_VER}-linux-arm64.tar.gz"
+        tar -zxvf singbox.tar.gz
+        mv sing-box-*-linux-arm64/sing-box openwrt/files/usr/bin/sing-box
+        rm -rf singbox.tar.gz sing-box-*-linux-arm64
+        
+        echo "Downloading ChinaDNS-NG..."
+        wget -O openwrt/files/usr/bin/hysteria https://github.com/apernet/hysteria/releases/latest/download/hysteria-linux-arm64
+        
+        echo "Downloading Hysteria..."
+        wget -O chinadns-ng "https://github.com/zfl9/chinadns-ng/releases/download/${CDNS_TAG}/chinadns-ng+wolfssl@aarch64-linux-musl@generic+v8a@fast+lto"
+        
+        echo "Downloading GeoView..."
+        wget -O geoview.tar.gz https://github.com/Cenmrev/geoview/releases/latest/download/geoview_linux_arm64.tar.gz
+        tar -zxvf geoview.tar.gz
+        mv geoview openwrt/files/usr/bin/geoview
+        rm -rf geoview.tar.gz
+        
+        echo "Downloading AdGuardHome..."
         wget -O agh.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_arm64.tar.gz
         tar -zxvf agh.tar.gz
         mv AdGuardHome/AdGuardHome openwrt/files/usr/bin/AdGuardHome
-        chmod +x openwrt/files/usr/bin/AdGuardHome
         rm -rf agh.tar.gz AdGuardHome
         
-        mkdir -p openwrt/files/etc/AdGuardHome/data/filters
+        echo "Downloading AdGuardHome Rules..."
         wget -O openwrt/files/etc/AdGuardHome/data/filters/1765534046.txt https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt
+        
+        chmod +x openwrt/files/usr/bin/*
 
     - name: SSH connect to Actions
       uses: P3TERX/ssh2actions@main
