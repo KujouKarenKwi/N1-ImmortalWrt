@@ -109,10 +109,7 @@ jobs:
         wget -O openwrt/files/usr/bin/chinadns-ng "https://github.com/zfl9/chinadns-ng/releases/latest/download/chinadns-ng+wolfssl@aarch64-linux-musl@generic+v8a@fast+lto"
         
         echo "Downloading GeoView..."
-        wget -O geoview.tar.gz https://github.com/Cenmrev/geoview/releases/latest/download/geoview_linux_arm64.tar.gz
-        tar -zxvf geoview.tar.gz
-        mv geoview openwrt/files/usr/bin/geoview
-        rm -rf geoview.tar.gz
+        wget -O openwrt/files/usr/bin/geoview https://github.com/snowie2000/geoview/releases/latest/download/geoview-linux-arm64
         
         echo "Downloading AdGuardHome..."
         wget -O agh.tar.gz https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_arm64.tar.gz
