@@ -102,11 +102,11 @@ jobs:
         mv sing-box-*-linux-arm64/sing-box openwrt/files/usr/bin/sing-box
         rm -rf singbox.tar.gz sing-box-*-linux-arm64
         
-        echo "Downloading ChinaDNS-NG..."
+        echo "Downloading Hysteria..."
         wget -O openwrt/files/usr/bin/hysteria https://github.com/apernet/hysteria/releases/latest/download/hysteria-linux-arm64
         
-        echo "Downloading Hysteria..."
-        wget -O chinadns-ng "https://github.com/zfl9/chinadns-ng/releases/download/${CDNS_TAG}/chinadns-ng+wolfssl@aarch64-linux-musl@generic+v8a@fast+lto"
+        echo "Downloading ChinaDNS-NG..."
+        wget -O openwrt/files/usr/bin/chinadns-ng "https://github.com/zfl9/chinadns-ng/releases/latest/download/chinadns-ng+wolfssl@aarch64-linux-musl@generic+v8a@fast+lto"
         
         echo "Downloading GeoView..."
         wget -O geoview.tar.gz https://github.com/Cenmrev/geoview/releases/latest/download/geoview_linux_arm64.tar.gz
