@@ -70,7 +70,7 @@ jobs:
     - name: Load N1 custom config
       run: |
         rm -rf openwrt/files openwrt/.config
-        mv armsr/armv8/N1/files armsr/armv8/N1/.config openwrt/
+        cp -rf armsr/armv8/N1/files armsr/armv8/N1/.config openwrt/
         
         chmod +x armsr/armv8/N1/first_run.sh
         sed -i 's|FIRSTRUN_SCRIPT="${PWD}/files/first_run.sh"|FIRSTRUN_SCRIPT="${GITHUB_WORKSPACE}/armsr/armv8/N1/first_run.sh"|g' armsr/armv8/N1/mk_s905d_n1.sh
@@ -109,6 +109,16 @@ jobs:
         cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(( $(nproc) + 1 )) || make -j1 V=s
+
+    - name: Clean up space for packaging
+      run: |
+        echo "Cleaning up build artifacts..."
+        rm -rf openwrt/dl/*
+        rm -rf openwrt/build_dir/*
+        rm -rf openwrt/staging_dir/*
+        rm -rf openwrt/tmp/*
+        echo "Space status after cleanup:"
+        df -hT
 
     - name: Package N1 firmware
       uses: unifreq/openwrt_packit@master
