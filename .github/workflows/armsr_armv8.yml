@@ -173,7 +173,8 @@ jobs:
           网关: 10.10.10.1
           备用IP: 192.168.1.100
           LUCI界面: root@password
-
+          无线: Phicomm_n1@password
+          
     - name: Delete old releases
       uses: dev-drprasad/delete-older-releases@master
       with:
