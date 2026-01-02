@@ -74,6 +74,11 @@ jobs:
         
         chmod +x armsr/armv8/N1/first_run.sh
         sed -i 's|FIRSTRUN_SCRIPT="${PWD}/files/first_run.sh"|FIRSTRUN_SCRIPT="${GITHUB_WORKSPACE}/armsr/armv8/N1/first_run.sh"|g' armsr/armv8/N1/mk_s905d_n1.sh
+
+        echo "Modifying Passwall app.sh..."
+        find openwrt -type f -path "*/usr/share/passwall/app.sh" -exec sed -i 's/local RUN_NEW_DNSMASQ=1/local RUN_NEW_DNSMASQ=0/g' {} +
+        echo "Check modification result:"
+        find openwrt -type f -path "*/usr/share/passwall/app.sh" -exec grep "local RUN_NEW_DNSMASQ" {} +
         
     - name: Download custom binaries & rules
       run: |
