@@ -129,8 +129,8 @@ DOCKER_README="${PWD}/files/DockerReadme.pdf"
 SYSINFO_SCRIPT="${PWD}/files/30-sysinfo.sh"
 
 # 20210923 add
-OPENWRT_INSTALL="${PWD}/files/openwrt-install-amlogic"
-OPENWRT_UPDATE="${PWD}/files/openwrt-update-amlogic"
+OPENWRT_INSTALL="${GITHUB_WORKSPACE}/armsr/armv8/N1/openwrt-install-amlogic"
+OPENWRT_UPDATE="${GITHUB_WORKSPACE}/armsr/armv8/N1/openwrt-update-amlogic"
 OPENWRT_KERNEL="${PWD}/files/openwrt-kernel"
 OPENWRT_BACKUP="${PWD}/files/openwrt-backup"
 
