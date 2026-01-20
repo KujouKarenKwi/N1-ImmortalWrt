@@ -5,7 +5,7 @@ patch -p1 -f < $(dirname "$0")/luci.patch
 
 # Add packages
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
-git clone https://github.com/xiaorouji/openwrt-passwall --depth=1 clone/passwall
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall --depth=1 clone/passwall
 git clone https://github.com/stevenjoezhang/luci-app-adguardhome --depth=1 clone/luci-app-adguardhome
 
 # Update packages
