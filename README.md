@@ -1,5 +1,5 @@
 固件适配斐讯 N1 旁路由模式，默认 Argon 主题。<br>
-包含：[luci-app-amlogic](https://github.com/ophub/luci-app-amlogic)、luci-app-dockerman、[luci-app-passwall](https://github.com/xiaorouji/openwrt-passwall)、luci-app-samba4、[luci-app-adguardhome](https://github.com/stevenjoezhang/luci-app-adguardhome)、luci-app-hd_idle、luci-app-wechatpush。
+包含：[luci-app-amlogic](https://github.com/ophub/luci-app-amlogic)、luci-app-dockerman、[luci-app-passwall](https://github.com/Openwrt-Passwall/openwrt-passwall)、luci-app-samba4、[luci-app-adguardhome](https://github.com/stevenjoezhang/luci-app-adguardhome)、luci-app-hd_idle、luci-app-wechatpush。
 # 描述
 AdGuardHome 监听 53 端口，请求发送至上游 Passwall 的 ChinaDNS-NG(127.0.0.1:15355)，由 Passwall 完成分流和解析<br>
 AdGuardHome 默认过滤规则为 [217heidai/adblockfilters](https://github.com/217heidai/adblockfilters) 编译当日最新完整规则<br>
