@@ -15,3 +15,7 @@ cp -rf clone/luci-app-adguardhome feeds/luci/applications/
 
 # Clean packages
 rm -rf clone
+
+# 强制禁用 Rust 的 LLVM 远端预编译包下载，改为云端本地编译以绕过 404 错误
+echo "Forcing Rust to compile LLVM locally to avoid 404 download errors..."
+sed -i 's/download-ci-llvm = true/download-ci-llvm = false/g' feeds/packages/lang/rust/Makefile
