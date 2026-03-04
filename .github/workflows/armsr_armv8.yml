@@ -64,6 +64,7 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
         $GITHUB_WORKSPACE/armsr/armv8/diy/diy.sh
+        ./scripts/feeds update -a
         ./scripts/feeds install -a
         
     - name: Load N1 custom config
