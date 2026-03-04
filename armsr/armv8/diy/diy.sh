@@ -12,10 +12,7 @@ git clone https://github.com/stevenjoezhang/luci-app-adguardhome --depth=1 clone
 rm -rf feeds/luci/applications/luci-app-passwall
 cp -rf clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luci/applications/
 cp -rf clone/luci-app-adguardhome feeds/luci/applications/
+sed -i '/luci-app-attendedsysupgrade/d' feeds/luci/collections/luci/Makefile
 
 # Clean packages
 rm -rf clone
-
-# 强制禁用 Rust 的 LLVM 远端预编译包下载，改为云端本地编译
-echo "Patching Rust Makefile to disable download-ci-llvm..."
-sed -i '/\[llvm\]/a \t\techo "download-ci-llvm = false" >> $(RUST_CONFIG)' feeds/packages/lang/rust/Makefile
