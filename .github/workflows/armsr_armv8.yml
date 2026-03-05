@@ -88,8 +88,6 @@ jobs:
         sed -i '/CONFIG_RUST_USE_CI_LLVM/d' openwrt/.config
         # 使用 OpenWrt 标准语法彻底禁用远端下载
         echo "# CONFIG_RUST_USE_CI_LLVM is not set" >> openwrt/.config
-        # 作为双保险，强行修改 Rust package 的 Makefile
-        sed -i 's/download-ci-llvm *= *true/download-ci-llvm = false/g' openwrt/feeds/packages/lang/rust/Makefile
         
     - name: Download custom binaries & rules
       run: |
