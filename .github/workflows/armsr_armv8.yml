@@ -84,10 +84,7 @@ jobs:
         find openwrt -type f -path "*/usr/share/passwall/app.sh" -exec grep "local RUN_NEW_DNSMASQ" {} +
         
         echo "=== 注入 Rust 终极修复配置，强制本地编译 LLVM ==="
-        # 清除可能存在的旧配置
-        sed -i '/CONFIG_RUST_USE_CI_LLVM/d' openwrt/.config
-        # 使用 OpenWrt 标准语法彻底禁用远端下载
-        echo "# CONFIG_RUST_USE_CI_LLVM is not set" >> openwrt/.config
+        sed -i 's/download-ci-llvm *= *true/download-ci-llvm=false/g' openwrt/feeds/packages/lang/rust/Makefile
         
     - name: Download custom binaries & rules
       run: |
